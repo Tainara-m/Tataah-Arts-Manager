@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tatááh Manager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.10.0/dist/tabler-icons.min.css" rel="stylesheet">
+<link rel="apple-touch-icon" sizes="180x180" href="./assets/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="stylesheet" href="css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+<!-- BUTTERFLY DECORATION -->
+<div class="butterfly-deco">🦋</div>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div style="display:flex;align-items:center;gap:10px">
+      <span class="logo-butterfly"><img src="assets/borboletatááh.png" alt="Logo da Tatááh Arts" style="width:24px;height:24px;display:block">
+      </span>
+      <div>
+        <div class="logo-title">Tatááh Arts</div>
+        <div class="logo-sub">Manager</div>
+      </div>
+    </div>
+  </div>
+  <nav class="nav">
+    <a class="nav-item active" onclick="showPage('dashboard')">
+      <i class="ti ti-layout-dashboard"></i> Dashboard
+    </a>
+    <div class="nav-section">Gestão</div>
+    <a class="nav-item" onclick="showPage('pedidos')">
+      <i class="ti ti-shopping-bag"></i> Pedidos
+    </a>
+    <a class="nav-item" onclick="showPage('clientes')">
+      <i class="ti ti-users"></i> Clientes
+    </a>
+    <a class="nav-item" onclick="showPage('produtos')">
+      <i class="ti ti-package"></i> Produtos
+    </a>
+    <div class="nav-section">Finanças</div>
+    <a class="nav-item" onclick="showPage('financeiro')">
+      <i class="ti ti-chart-pie"></i> Financeiro
+    </a>
+    <a class="nav-item" onclick="showPage('precificacao')">
+      <i class="ti ti-calculator"></i> Precificação
+    </a>
+    <div class="nav-section">Organização</div>
+    <a class="nav-item" onclick="showPage('agenda')">
+      <i class="ti ti-calendar"></i> Agenda
+    </a>
+    <a class="nav-item" onclick="showPage('datas')">
+      <i class="ti ti-heart"></i> Datas Especiais
+    </a>
+    <a class="nav-item" onclick="showPage('portfolio')">
+      <i class="ti ti-photo"></i> Portfólio
+    </a>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="user-chip">
+      <div class="avatar">T</div>
+      <div>
+        <div class="user-name">Tainara</div>
+        <div class="user-role">Tatááh Arts</div>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<div class="main">
+  <!-- TOPBAR -->
+  <div class="topbar" id="topbar">
+    <div>
+      <div class="page-title" id="page-title">Dashboard</div>
+      <div class="page-subtitle" id="page-subtitle">Visão geral do negócio</div>
+    </div>
+    <div class="topbar-right">
+      <div class="notif-btn"><i class="ti ti-bell" style="font-size:18px"></i><div class="notif-dot"></div></div>
+      <button class="btn btn-primary" id="main-action-btn" onclick="openMainModal()"><i class="ti ti-plus"></i> Novo Pedido</button>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- DASHBOARD -->
+    <div id="page-dashboard" class="page active">
+      <div class="greeting">
+        <h2>Boa tarde, Tainara✨</h2>
+        <p>Aqui está um resumo do seu negócio hoje</p>
+      </div>
+
+      <div class="cards-grid">
+        <div class="metric-card highlight">
+          <div class="metric-icon"><i class="ti ti-currency-dollar"></i></div>
+          <div class="metric-label">Faturamento do Mês</div>
+          <div class="metric-value" id="dash-fat">R$ 3.840</div>
+          <div class="metric-sub">↑ 18% vs mês anterior</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-icon"><i class="ti ti-shopping-bag"></i></div>
+          <div class="metric-label">Pedidos em Andamento</div>
+          <div class="metric-value" id="dash-andamento">0</div>
+          <div class="metric-sub">Atualizado agora</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-icon"><i class="ti ti-truck-delivery"></i></div>
+          <div class="metric-label">Entregas da Semana</div>
+          <div class="metric-value" id="dash-semana">0</div>
+          <div class="metric-sub">Próximos 7 dias</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-icon"><i class="ti ti-chart-line"></i></div>
+          <div class="metric-label">Lucro Estimado</div>
+          <div class="metric-value" id="dash-lucro">R$ 1.920</div>
+          <div class="metric-sub">Margem ~50%</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-icon"><i class="ti ti-star"></i></div>
+          <div class="metric-label">Mais Vendido</div>
+          <div class="metric-value" style="font-size:16px;padding-top:8px">Caixas Personalizadas</div>
+          <div class="metric-sub">12 vendas este mês</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-icon"><i class="ti ti-users"></i></div>
+          <div class="metric-label">Clientes Ativos</div>
+          <div class="metric-value" id="dash-clientes">0</div>
+          <div class="metric-sub">Total cadastrado</div>
+        </div>
+      </div>
+
+      <div class="charts-row">
+        <div class="chart-card">
+          <div class="chart-title">Evolução do Faturamento</div>
+          <div class="chart-sub">Últimos 6 meses</div>
+          <canvas id="fatChart" height="180"></canvas>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">Categorias</div>
+          <div class="chart-sub">Por volume de vendas</div>
+          <canvas id="catChart" height="180"></canvas>
+        </div>
+      </div>
+
+      <div class="alerts-section">
+        <div class="section-title">🔔 Alertas & Lembretes</div>
+        <div class="alert-item">
+          <div class="alert-dot amber"></div>
+          <div class="alert-text">Dia dos Namorados em <strong>7 dias</strong> — prepare seus kits!</div>
+          <div class="alert-time">12/06</div>
+        </div>
+        <div class="alert-item">
+          <div class="alert-dot rose"></div>
+          <div class="alert-text">Aniversário da cliente <strong>Mariana Costa</strong> amanhã</div>
+          <div class="alert-time">09/06</div>
+        </div>
+        <div class="alert-item">
+          <div class="alert-dot red"></div>
+          <div class="alert-text" id="alert-late">Nenhum pedido atrasado 🎉</div>
+          <div class="alert-time"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PEDIDOS -->
+    <div id="page-pedidos" class="page">
+      <div class="filters-bar">
+        <input type="text" class="filter-input" placeholder="🔍  Buscar pedido, cliente..." id="order-search" oninput="renderOrders()">
+        <button class="btn btn-ghost" onclick="filterOrders('all')">Todos</button>
+        <button class="btn btn-ghost" onclick="filterOrders('Orçamento')">Orçamento</button>
+        <button class="btn btn-ghost" onclick="filterOrders('Produção')">Produção</button>
+        <button class="btn btn-ghost" onclick="filterOrders('Pronto')">Prontos</button>
+      </div>
+      <div class="kanban" id="kanban-board"></div>
+    </div>
+
+    <!-- CLIENTES -->
+    <div id="page-clientes" class="page">
+      <div class="filters-bar">
+        <input type="text" class="filter-input" placeholder="🔍  Buscar cliente..." id="client-search" oninput="renderClients()">
+      </div>
+      <div class="clients-grid" id="clients-grid"></div>
+    </div>
+
+    <!-- PRODUTOS -->
+    <div id="page-produtos" class="page">
+      <div class="filters-bar">
+        <button class="btn btn-ghost" onclick="filterProducts('all')">Todos</button>
+        <button class="btn btn-ghost" onclick="filterProducts('Caixas')">Caixas</button>
+        <button class="btn btn-ghost" onclick="filterProducts('Flores')">Flores</button>
+        <button class="btn btn-ghost" onclick="filterProducts('Kits')">Kits</button>
+        <button class="btn btn-ghost" onclick="filterProducts('Papelaria')">Papelaria</button>
+      </div>
+      <div class="products-grid" id="products-grid"></div>
+    </div>
+
+    <!-- FINANCEIRO -->
+    <div id="page-financeiro" class="page">
+      <div class="fin-cards">
+        <div class="fin-card green">
+          <div class="fin-label">Total Entradas</div>
+          <div class="fin-value" id="fin-in">R$ 3.840</div>
+        </div>
+        <div class="fin-card red">
+          <div class="fin-label">Total Saídas</div>
+          <div class="fin-value" id="fin-out">R$ 1.920</div>
+        </div>
+        <div class="fin-card">
+          <div class="fin-label">Lucro Líquido</div>
+          <div class="fin-value" id="fin-profit">R$ 1.920</div>
+        </div>
+      </div>
+      <div class="transactions">
+        <div class="trans-header">
+          <div class="chart-title">Transações Recentes</div>
+          <button class="btn btn-ghost" onclick="openAddTransaction()"><i class="ti ti-plus"></i> Adicionar</button>
+        </div>
+        <div id="transactions-list"></div>
+      </div>
+    </div>
+
+    <!-- PRECIFICAÇÃO -->
+    <div id="page-precificacao" class="page">
+      <div class="pricing-container">
+        <div class="pricing-form">
+          <div class="section-title" style="margin-bottom:20px">🧮 Calculadora de Preço</div>
+          <div class="fields-row">
+            <div class="field-group">
+              <span class="field-label">Papel / Material</span>
+              <input type="number" class="field-input" id="p-papel" value="0" oninput="calcPrice()" placeholder="R$">
+            </div>
+            <div class="field-group">
+              <span class="field-label">Impressão</span>
+              <input type="number" class="field-input" id="p-impressao" value="0" oninput="calcPrice()" placeholder="R$">
+            </div>
+          </div>
+          <div class="fields-row">
+            <div class="field-group">
+              <span class="field-label">Fita / Cola</span>
+              <input type="number" class="field-input" id="p-fita" value="0" oninput="calcPrice()" placeholder="R$">
+            </div>
+            <div class="field-group">
+              <span class="field-label">Embalagem</span>
+              <input type="number" class="field-input" id="p-embalagem" value="0" oninput="calcPrice()" placeholder="R$">
+            </div>
+          </div>
+          <div class="fields-row">
+            <div class="field-group">
+              <span class="field-label">Mão de obra (R$/h)</span>
+              <input type="number" class="field-input" id="p-mdo" value="25" oninput="calcPrice()" placeholder="R$/h">
+            </div>
+            <div class="field-group">
+              <span class="field-label">Horas de produção</span>
+              <input type="number" class="field-input" id="p-horas" value="1" oninput="calcPrice()" placeholder="horas">
+            </div>
+          </div>
+          <div class="field-group" style="margin-bottom:16px">
+            <span class="field-label">Margem de lucro (%)</span>
+            <input type="number" class="field-input" id="p-margem" value="100" oninput="calcPrice()" placeholder="%">
+          </div>
+        </div>
+        <div class="pricing-result">
+          <div class="result-label">Preço Sugerido</div>
+          <div class="result-total" id="price-result">R$ 25,00</div>
+          <div class="result-breakdown">
+            <div class="result-line"><span>Custo de materiais</span><span id="pr-materiais">R$ 0,00</span></div>
+            <div class="result-line"><span>Mão de obra</span><span id="pr-mdo">R$ 25,00</span></div>
+            <div class="result-line"><span>Custo total</span><span id="pr-custo">R$ 25,00</span></div>
+            <div class="result-line"><span>Lucro estimado</span><span id="pr-lucro">R$ 25,00</span></div>
+            <div class="result-line"><span><strong>Preço final</strong></span><span id="pr-final"><strong>R$ 50,00</strong></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AGENDA -->
+    <div id="page-agenda" class="page">
+      <div class="cal-header">
+        <div class="cal-nav">
+          <button class="btn btn-ghost" onclick="changeMonth(-1)"><i class="ti ti-chevron-left"></i></button>
+          <div class="cal-month" id="cal-month-title">Junho 2026</div>
+          <button class="btn btn-ghost" onclick="changeMonth(1)"><i class="ti ti-chevron-right"></i></button>
+        </div>
+        <div style="display:flex;gap:10px">
+          <span style="font-size:12px;display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:50%;background:var(--rose);display:inline-block"></span>Pedido</span>
+          <span style="font-size:12px;display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:50%;background:#2D8A4E;display:inline-block"></span>Entrega</span>
+          <span style="font-size:12px;display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:50%;background:#856404;display:inline-block"></span>Especial</span>
+        </div>
+      </div>
+      <div class="cal-grid" id="cal-grid"></div>
+    </div>
+
+    <!-- DATAS -->
+    <div id="page-datas" class="page">
+      <div class="dates-grid" id="dates-grid"></div>
+    </div>
+
+    <!-- PORTFOLIO -->
+    <div id="page-portfolio" class="page">
+      <div class="products-grid" id="portfolio-grid"></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- MODAL PEDIDO -->
+<div class="modal-overlay" id="modal-pedido">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="modal-pedido-title">Novo Pedido </div>
+      <button class="modal-close" onclick="closeModal('modal-pedido')"><i class="ti ti-x"></i></button>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Nome do cliente</label>
+        <input type="text" id="f-nome" placeholder="Nome completo">
+      </div>
+      <div class="form-group">
+        <label>Telefone / WhatsApp</label>
+        <input type="text" id="f-tel" placeholder="(00) 00000-0000">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Produto</label>
+        <input type="text" id="f-produto" placeholder="Descreva o produto">
+      </div>
+      <div class="form-group">
+        <label>Valor (R$)</label>
+        <input type="number" id="f-valor" placeholder="0,00">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Data do pedido</label>
+        <input type="date" id="f-data-pedido">
+      </div>
+      <div class="form-group">
+        <label>Data de entrega</label>
+        <input type="date" id="f-data-entrega">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Status</label>
+        <select id="f-status">
+          <option>Orçamento</option>
+          <option>Aprovado</option>
+          <option>Produção</option>
+          <option>Pronto</option>
+          <option>Entregue</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Forma de pagamento</label>
+        <select id="f-pagamento">
+          <option>Pix</option>
+          <option>Dinheiro</option>
+          <option>Cartão</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row full">
+      <div class="form-group">
+        <label>Observações</label>
+        <textarea id="f-obs" rows="2" placeholder="Personalização, referências, detalhes..."></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('modal-pedido')">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveOrder()"><i class="ti ti-check"></i> Salvar Pedido</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL CLIENTE -->
+<div class="modal-overlay" id="modal-cliente">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Novo Cliente 🌸</div>
+      <button class="modal-close" onclick="closeModal('modal-cliente')"><i class="ti ti-x"></i></button>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Nome</label>
+        <input type="text" id="c-nome" placeholder="Nome completo">
+      </div>
+      <div class="form-group">
+        <label>Telefone</label>
+        <input type="text" id="c-tel" placeholder="(00) 00000-0000">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Instagram</label>
+        <input type="text" id="c-insta" placeholder="@usuario">
+      </div>
+      <div class="form-group">
+        <label>Data de nascimento</label>
+        <input type="date" id="c-nasc">
+      </div>
+    </div>
+    <div class="form-row full">
+      <div class="form-group">
+        <label>Datas especiais</label>
+        <input type="text" id="c-datas" placeholder="Aniversário de casamento, filhos...">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('modal-cliente')">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveClient()"><i class="ti ti-check"></i> Salvar Cliente</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL TRANSAÇÃO -->
+<div class="modal-overlay" id="modal-transacao">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Nova Transação 💰</div>
+      <button class="modal-close" onclick="closeModal('modal-transacao')"><i class="ti ti-x"></i></button>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Tipo</label>
+        <select id="t-tipo">
+          <option value="in">Entrada</option>
+          <option value="out">Saída</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Valor (R$)</label>
+        <input type="number" id="t-valor" placeholder="0,00">
+      </div>
+    </div>
+    <div class="form-row full">
+      <div class="form-group">
+        <label>Descrição</label>
+        <input type="text" id="t-desc" placeholder="Ex: Venda caixa personalizada, Compra papel...">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('modal-transacao')">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveTransaction()"><i class="ti ti-check"></i> Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script src="js/script.js"></script>
+</body>
+</html>
